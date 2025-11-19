@@ -1,24 +1,30 @@
-import { Text, TextInput, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
+import CategoryList from "./components/CategoryList";
+import HomeHeader from "./components/HomeHeader";
+import RestaurantList from "./components/RestaurantList";
+import SearchBar from "./components/SeachBar";
+
 
 export default function Index() {
+  const user = {
+    name: 'trungdongle',
+    address: 'HCM City'
+  }
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-
-      <TextInput 
-        style={{
-          backgroundColor: '#af7474ff',
-          
-        }}
-      >cc</TextInput>
-
-
-    </View>
+    <ScrollView style={styles.container}>
+      <HomeHeader user={user}/>
+      <SearchBar/>
+      <CategoryList/>
+      <RestaurantList/>
+      
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container:{
+    paddingHorizontal: 24,
+    backgroundColor: '#fff'
+  }
+});

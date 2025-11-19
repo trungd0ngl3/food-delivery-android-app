@@ -3,17 +3,16 @@ package com.foodapp.food_delivery.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.foodapp.food_delivery.enums.Role;
-
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,36 +20,29 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "users")
+@Table(name = "orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class User {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long userId;
+    Long orderId;
 
-    String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
-    @Column(unique = true, nullable = false)
-    String email;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    Restaurant restaurant;
 
-    String password;
+    LocalDateTime orderDate;
+    Double totalPrice;
+    String status;
 
-    String phone;
-
-    String address;
-
-    Role role;
-
-    @Builder.Default
-    LocalDateTime createdAt = LocalDateTime.now();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<Order> orders;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    Cart cart;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    List<OrderItem> orderItems;
 }
