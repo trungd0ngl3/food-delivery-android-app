@@ -1,6 +1,5 @@
 package com.foodapp.food_delivery.dto.request;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -8,8 +7,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class UserCreationRequest {
-    String name;
+public class LoginRequest {
     String email;
     String password;
 }

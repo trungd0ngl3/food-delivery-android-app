@@ -1,10 +1,12 @@
 package com.foodapp.food_delivery.controller;
 
+import com.foodapp.food_delivery.dto.request.UserUpdateRequest;
+import com.foodapp.food_delivery.dto.response.UserUpdateResponse;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodapp.food_delivery.dto.request.UserCreationRequest;
 import com.foodapp.food_delivery.dto.response.ApiResponse;
-import com.foodapp.food_delivery.dto.response.UserResponse;
+import com.foodapp.food_delivery.dto.response.UserCreationResponse;
 import com.foodapp.food_delivery.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,16 +33,17 @@ public class UserController {
     UserService userService;
 
     @GetMapping()
-    public ApiResponse<List<UserResponse>> getUsers() {
-        return ApiResponse.<List<UserResponse>>builder()
+    public ApiResponse<List<UserCreationResponse>> getUsers() {
+        return ApiResponse.<List<UserCreationResponse>>builder()
                 .code(200)
                 .data(userService.getAllUsers())
                 .build();
     }
     
-    @PostMapping()
-    public ApiResponse<UserResponse> postMethodName(@RequestBody UserCreationRequest request) {
-        return ApiResponse.<UserResponse>builder()
+    @PostMapping("createUser")
+    public ApiResponse<UserCreationResponse> createUser(@RequestBody UserCreationRequest request) {
+        System.out.println("createUser");
+        return ApiResponse.<UserCreationResponse>builder()
                 .code(201)
                 .message("User created successfully")
                 .data(userService.createUser(request))
@@ -48,7 +51,7 @@ public class UserController {
     }
     
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteUser(@PathVariable String id) {
+    public ApiResponse<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ApiResponse.<Void>builder()
                 .code(200)
@@ -57,8 +60,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<UserResponse> updateUser(@PathVariable String id, @RequestBody UserCreationRequest request) {
-        return ApiResponse.<UserResponse>builder()
+    public ApiResponse<UserUpdateResponse> updateUser(@PathVariable Integer id, @RequestBody UserUpdateRequest request) {
+        return ApiResponse.<UserUpdateResponse>builder()
                 .code(200)
                 .message("User updated successfully")
                 .data(userService.updateUser(id, request)) 

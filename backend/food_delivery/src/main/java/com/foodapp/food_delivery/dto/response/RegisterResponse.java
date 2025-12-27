@@ -6,9 +6,10 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 @AllArgsConstructor
-@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class ApiResponse<T> {
-    int code;
-    String message;
-    T data;
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class RegisterResponse {
+    Integer id;
+    String name;
+    String email;
+    String role;
 }

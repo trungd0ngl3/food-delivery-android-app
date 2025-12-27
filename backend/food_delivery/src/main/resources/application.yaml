@@ -1,9 +1,18 @@
 spring:
+    jackson:
+        time-zone: Asia/Ho_Chi_Minh
+
     datasource:
-        url: jdbc:mysql://localhost:3316/food_deli_db
+        url: jdbc:mysql://localhost:3316/food_delivery?serverTimezone=Asia/Ho_Chi_Minh
         username: root
         password: mysql
 
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: validate
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                jdbc:
+                    time_zone: Asia/Ho_Chi_Minh
