@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { ChevronDown, Menu, Search, ShoppingBag } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -40,10 +41,17 @@ function Header() {
       <Text style={styles.greeting}>Hey {username}, <Text style={styles.bold}>Good {time}!</Text> </Text>
       
       {/* Search Bar */}
-      <View style={styles.searchBar}>
-        <Search style={styles.searchIcon} color={'#A0A5BA'} />
-        <TextInput style={styles.searchInput} placeholder='Search..'></TextInput>
-      </View>
+      <Link href="/search" asChild>
+        <Pressable style={styles.searchBar}>
+          <Search style={styles.searchIcon} color={'#A0A5BA'} />
+          <TextInput 
+            style={styles.searchInput} 
+            placeholder='Search..' 
+            editable={false} 
+            pointerEvents="none" 
+          />
+        </Pressable>
+      </Link>
 
     </View>
   )

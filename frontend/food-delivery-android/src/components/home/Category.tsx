@@ -1,3 +1,4 @@
+import { Colors } from '@/src/constants/Color'
 import { ChevronRight } from 'lucide-react-native'
 import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
@@ -9,7 +10,7 @@ function Category({categories}) {
       <View style={styles.categoryHeader}>
         <Text style={{fontSize: 20}}>All Categories</Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text>See All</Text><ChevronRight size={24} color={'#727272ff'}/>
+          <Text>See All</Text><ChevronRight size={24} color={Colors.darkgray}/>
         </View>
       </View>
       <FlatList
@@ -20,8 +21,7 @@ function Category({categories}) {
             contentContainerStyle={styles.categoryList}
             renderItem={({ item }) => (
               <CategoryItem
-                imgUrl={item.image}
-                name={item.name}
+                props={item}
               />
             )}
           />

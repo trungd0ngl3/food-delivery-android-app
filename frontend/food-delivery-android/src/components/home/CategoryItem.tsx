@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-function CategoryItem({ imgUrl, name }: { imgUrl: string; name: string }) {
+function CategoryItem({ props }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.card}>
-        <Image source={{ uri: imgUrl }} style={styles.image} />
+        <Image source={{ uri: props.image }} style={styles.image} />
       </View>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.text}>{props.name}</Text>
     </View>
   );
 }

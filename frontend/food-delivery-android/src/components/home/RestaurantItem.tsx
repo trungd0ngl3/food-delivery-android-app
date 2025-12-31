@@ -2,21 +2,9 @@ import { Clock, Star } from "lucide-react-native";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-interface RestaurantItemProps {
-  name: string;
-  image: string;
-  rating: number;
-  time: string;
-  tags?: string[];
-}
 
-export default function RestaurantItem({
-  name,
-  image,
-  rating,
-  time,
-  tags,
-}: RestaurantItemProps) {
+
+function RestaurantItem({name,image,rating,time,tags}) {
   return (
     <View style={styles.container}>
       <Image
@@ -39,7 +27,7 @@ export default function RestaurantItem({
             <Text style={styles.rating}>{rating}</Text>
           </View>
           <View style={styles.infoItem}>
-             <Clock size={16} color="#A0A5BA" />
+             <Clock size={16} color="#FF7622" />
              <Text style={styles.time}>{time}</Text>
           </View>
            <View style={styles.infoItem}>
@@ -102,3 +90,5 @@ const styles = StyleSheet.create({
      color: "#A0A5BA",
   }
 });
+
+export default RestaurantItem;
