@@ -2,6 +2,7 @@ package com.foodapp.food_delivery.controller;
 
 import com.foodapp.food_delivery.dto.request.UserUpdateRequest;
 import com.foodapp.food_delivery.dto.response.UserUpdateResponse;
+import com.foodapp.food_delivery.model.User;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodapp.food_delivery.dto.request.UserCreationRequest;
@@ -50,7 +51,7 @@ public class UserController {
                 .build();
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ApiResponse<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ApiResponse.<Void>builder()
@@ -59,12 +60,21 @@ public class UserController {
                 .build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public ApiResponse<UserUpdateResponse> updateUser(@PathVariable Integer id, @RequestBody UserUpdateRequest request) {
         return ApiResponse.<UserUpdateResponse>builder()
                 .code(200)
                 .message("User updated successfully")
                 .data(userService.updateUser(id, request)) 
+                .build();
+    }
+
+    @PostMapping("get/{id}")
+    public ApiResponse<User> getUser(@PathVariable Integer id) {
+        return ApiResponse.<User>builder()
+                .code(200)
+                .message("User detail :")
+                .data(userService.getUser(id))
                 .build();
     }
     

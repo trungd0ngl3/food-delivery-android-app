@@ -2,16 +2,16 @@ package com.foodapp.food_delivery.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RegisterRequest {
-    String name;
-    String email;
-    String password;
+public class ForgotPasswordConfirmRequest {
+    private String email;
+    private String otp;
+    private String newPassword;
 }

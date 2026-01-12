@@ -1,7 +1,6 @@
 package com.foodapp.food_delivery.controller;
 
-import com.foodapp.food_delivery.dto.request.LoginRequest;
-import com.foodapp.food_delivery.dto.request.RegisterRequest;
+import com.foodapp.food_delivery.dto.request.*;
 import com.foodapp.food_delivery.dto.response.ApiResponse;
 import com.foodapp.food_delivery.dto.response.LoginResponse;
 import com.foodapp.food_delivery.dto.response.RegisterResponse;
@@ -30,16 +29,40 @@ public class AuthController {
                 .data(authService.login(request))
                 .build();
     }
-    @PostMapping(
-            value = "/register",
-            consumes = "application/json",
-            produces = "application/json"
-    )
-    public ApiResponse<RegisterResponse> register(@RequestBody RegisterRequest request) {
+
+    @PostMapping("/register/request-otp")
+    public ApiResponse<String> requestRegisterOtp(@RequestBody RegisterRequest req) {
+        return ApiResponse.<String>builder()
+                .code(200)
+                .message("Request Register success")
+                .data(authService.requestRegisterOtp(req))
+                .build();
+    }
+
+    @PostMapping("/register/confirm")
+    public ApiResponse<RegisterResponse> confirmRegister(@RequestBody ConfirmRegisterRequest req) {
         return ApiResponse.<RegisterResponse>builder()
-                .code(201)
+                .code(200)
                 .message("Register success")
-                .data(authService.register(request))
+                .data(authService.confirmRegister(req))
+                .build();
+    }
+
+    @PostMapping("/forgot-password/request-otp")
+    public ApiResponse<String> requestForgotPasswordOtp(@RequestBody ForgotPasswordRequestOtp req) {
+        return ApiResponse.<String>builder()
+                .code(200)
+                .message("Request password reset success")
+                .data(authService.requestForgotPasswordOtp(req))
+                .build();
+    }
+
+    @PostMapping("/forgot-password/confirm")
+    public ApiResponse<String> confirmForgotPassword(@RequestBody ForgotPasswordConfirmRequest req) {
+        return ApiResponse.<String>builder()
+                .code(200)
+                .message("Reset Password success")
+                .data(authService.confirmForgotPassword(req))
                 .build();
     }
 

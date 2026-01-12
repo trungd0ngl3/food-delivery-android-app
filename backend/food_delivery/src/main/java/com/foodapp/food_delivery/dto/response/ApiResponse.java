@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class ApiResponse<T> {
     int code;

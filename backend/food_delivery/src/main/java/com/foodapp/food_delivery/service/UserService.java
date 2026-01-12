@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.foodapp.food_delivery.dto.request.UserUpdateRequest;
 import com.foodapp.food_delivery.dto.response.UserUpdateResponse;
+import com.foodapp.food_delivery.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,9 @@ public class UserService {
 
         userMapper.updateUser(request, user);
         return userMapper.toUserUpdateResponse(userRepository.save(user));
+    }
+
+    public User getUser(Integer id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
