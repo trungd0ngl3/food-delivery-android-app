@@ -4,15 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "Restaurants")
 @Data
 @AllArgsConstructor
 @Builder
@@ -31,7 +23,8 @@ import lombok.experimental.FieldDefaults;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long restaurantId;
+    @Column(name = "restaurant_id")
+    Integer restaurantId;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
@@ -40,7 +33,9 @@ public class Restaurant {
     String name;
     String address;
     String phone;
+    @Column(name = "opening_time")
     LocalTime openingTime;
+    @Column(name = "closing_time")
     LocalTime closingTime;
     
     @Builder.Default

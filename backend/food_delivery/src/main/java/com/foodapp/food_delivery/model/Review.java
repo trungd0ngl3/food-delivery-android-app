@@ -2,13 +2,7 @@ package com.foodapp.food_delivery.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "Reviews")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +21,7 @@ import lombok.experimental.FieldDefaults;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Integer reviewId;
 
     @ManyToOne
@@ -39,6 +34,7 @@ public class Review {
 
     private Integer rating;
     private String comment;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
 }
