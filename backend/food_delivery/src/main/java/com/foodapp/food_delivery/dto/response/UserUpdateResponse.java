@@ -8,8 +8,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class ApiResponse<T> {
-    int code;
-    String message;
-    T data;
+public class UserUpdateResponse {
+    String name;
+    String phone;
+    String address;
 }

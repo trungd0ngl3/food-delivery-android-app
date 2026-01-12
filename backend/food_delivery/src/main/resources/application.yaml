@@ -1,10 +1,36 @@
 spring:
+    data:
+      redis:
+          host: localhost
+          port: 6379
+
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: tnt098poi@gmail.com
+        password: tyny glfs jbof hswi
+
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+
+    jackson:
+        time-zone: Asia/Ho_Chi_Minh
+
     datasource:
-        url: jdbc:mysql://localhost:3316/food_delivery
+        url: jdbc:mysql://localhost:3316/food_delivery?serverTimezone=Asia/Ho_Chi_Minh
         username: root
         password: mysql
 
     jpa:
         hibernate:
-            ddl-auto: update
-        show-sql: true
+            ddl-auto: validate
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                jdbc:
+                    time_zone: Asia/Ho_Chi_Minh

@@ -2,15 +2,7 @@ package com.foodapp.food_delivery.model;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "carts")
+@Table(name = "Cart")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +20,8 @@ import lombok.experimental.FieldDefaults;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long cartId;
+    @Column(name = "cart_id")
+    Integer cartId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
