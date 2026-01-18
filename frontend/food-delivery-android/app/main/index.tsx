@@ -1,49 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList,
-    StatusBar,
-    StyleSheet,
-    Text,
-    View,
+  ActivityIndicator,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import Category from "@/src/components/home/Category";
 import Header from "@/src/components/home/Header";
 import RestaurantItem from "@/src/components/home/RestaurantItem";
 
-import { restaurants as initialRestaurants } from "@/src/data/restaurants";
-
-const user = {
-  name: "trungdongle",
-  address: "HCM City",
-};
-
-const categories = [
-  { id: "1", name: "Pizza", image: "https://img.icons8.com/color/96/pizza.png" },
-  { id: "2", name: "Hamburger", image: "https://img.icons8.com/color/96/hamburger.png" },
-  { id: "3", name: "Trà sữa", image: "https://img.icons8.com/color/96/milk-tea.png" },
-  { id: "4", name: "Cơm", image: "https://img.icons8.com/color/96/rice-bowl.png" },
-  { id: "5", name: "Noodles", image: "https://img.icons8.com/color/96/noodles.png" },
-];
+import {
+  getAllRestaurants,
+  RestaurantResponse,
+} from "@/src/services/restaurant.service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAllCategories, CategoryResponse } from "@/src/services/category.service";
+import { LoginResponse } from "@/src/services/auth.service";
 
 export default function MainScreen() {
-  const [restaurants, setRestaurants] = useState(initialRestaurants);
+  const [user, setUser] = useState<LoginResponse | null>(null);
+  const [restaurants, setRestaurants] = useState<RestaurantResponse[]>([]);
+  const [categories, setCategories] = useState<CategoryResponse[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const loadMoreRestaurants = () => {
-    if (loading) return;
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, [selectedCategory]);
+
+  const fetchInitialData = async () => {
     setLoading(true);
+    try {
+        const [restaurantsData, categoriesData] = await Promise.all([
+            getAllRestaurants(),
+            getAllCategories()
+        ]);
+        setRestaurants(restaurantsData);
+        setCategories(categoriesData);
 
-    setTimeout(() => {
-      const newRestaurants = initialRestaurants.map((item) => ({
-        ...item,
-        id: (parseInt(item.id) + restaurants.length).toString(),
-      }));
-      setRestaurants([...restaurants, ...newRestaurants]);
-      setLoading(false);
-    }, 1500);
+        // Fetch User
+        const userJson = await AsyncStorage.getItem("user");
+        if (userJson) {
+            setUser(JSON.parse(userJson));
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const fetchRestaurants = async () => {
+    setLoading(true);
+    try {
+        const restaurantsData = await getAllRestaurants(selectedCategory || undefined);
+        setRestaurants(restaurantsData);
+    } catch (error) {
+        console.error("Error fetching restaurants:", error);
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const onSelectCategory = (id: number) => {
+    if (selectedCategory === id) {
+        setSelectedCategory(null);
+    } else {
+        setSelectedCategory(id);
+    }
   };
 
   return (
@@ -52,22 +87,30 @@ export default function MainScreen() {
 
       <FlatList
         data={restaurants}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={{ paddingHorizontal: 24 }}>
-            <RestaurantItem
-              name={item.name}
-              image={item.image}
-              rating={item.rating}
-              time={item.time}
-              tags={item.tags}
-            />
+            <TouchableOpacity
+              onPress={() => router.push(`/main/restaurant/${item.id}`)}
+            >
+              <RestaurantItem
+                name={item.name}
+                image={item.image}
+                rating={item.rating}
+                time={item.deliveryTime}
+                tags={item.tags}
+              />
+            </TouchableOpacity>
           </View>
         )}
         ListHeaderComponent={() => (
           <View>
-            <Header />
-            <Category categories={categories} />
+            <Header user={user} />
+            <Category 
+                categories={categories} 
+                selectedCategory={selectedCategory}
+                onSelectCategory={onSelectCategory}
+            />
             <Text style={styles.sectionTitle}>Open Restaurants</Text>
           </View>
         )}
@@ -78,8 +121,6 @@ export default function MainScreen() {
             </View>
           ) : null
         }
-        onEndReached={loadMoreRestaurants}
-        onEndReachedThreshold={0.5}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
     </SafeAreaView>

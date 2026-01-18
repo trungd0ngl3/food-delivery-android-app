@@ -31,6 +31,9 @@ public class Menu {
     String description;
     @Column(name = "image_url")
     String image;
+    
+    String category; // Grouping like "Burger", "Drink"
+
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
