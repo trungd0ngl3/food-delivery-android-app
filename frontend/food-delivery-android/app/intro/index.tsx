@@ -1,35 +1,42 @@
+import { Colors } from "@/src/constants/Color";
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
 
 const slides = [
   {
     id: "1",
     title: "All your favorites",
-    description:
-      "Get all your favorite food in one place, you just place the order we do the rest",
+    description1:
+      "Get all your favorite food in one place,",
+    description2:
+      "you just place the order we do the rest",
     image: require("../../src/assets/images/intro/intro1.png"),
   },
   {
     id: "2",
     title: "Order from chosen chef",
-    description:
-      "Get all your favorite food in one place, you just place the order we do the rest",
+    description1:
+      "Choose your chef,",
+    description2:
+      "get your favorite food",  
     image: require("../../src/assets/images/intro/intro2.png"),
   },
   {
     id: "3",
     title: "Free delivery offers",
-    description:
-      "Get all your favorite food in one place, you just place the order we do the rest",
+    description1:
+      "No extra money in delivery,",
+    description2:
+      "you just place the order we do the rest",
     image: require("../../src/assets/images/intro/intro3.png"),
   },
 ];
@@ -59,12 +66,12 @@ export default function IntroScreen() {
         animated: true,
       });
     } else {
-      router.replace("/auth");
+      router.replace("/auth/login");
     }
   };
 
   const handleSkip = () => {
-    router.replace("/auth");
+    router.replace("/auth/login");
   };
 
   return (
@@ -85,7 +92,8 @@ export default function IntroScreen() {
           <View style={[styles.slide, { width }]}>
             <View style={styles.textContainer}>
               <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.description}>{item.description1}</Text>
+              <Text style={styles.description}>{item.description2}</Text>
             </View>
 
             <Image
@@ -133,7 +141,7 @@ export default function IntroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
   },
 
   slide: {
@@ -151,13 +159,13 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "600",
     marginBottom: 12,
-    color: "#181C2E",
+    color: Colors.text,
     textAlign: "center",
   },
 
   description: {
     fontSize: 16,
-    color: "#666",
+    color: Colors.darkgray,
     textAlign: "center",
     lineHeight: 22,
   },
@@ -177,12 +185,12 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#ccc",
+    backgroundColor: Colors.darkgray,
     marginHorizontal: 6,
   },
 
   activeDot: {
-    backgroundColor: "#FF7622",
+    backgroundColor: Colors.primary,
     width: 16,
   },
 
@@ -195,18 +203,18 @@ const styles = StyleSheet.create({
 
   skip: {
     fontSize: 16,
-    color: "#999",
+    color: Colors.darkgray,
   },
 
   nextButton: {
-    backgroundColor: "#FF7622",
+    backgroundColor: Colors.primary,
     paddingHorizontal: 28,
     paddingVertical: 12,
     borderRadius: 24,
   },
 
   nextText: {
-    color: "#fff",
+    color: Colors.background,
     fontSize: 16,
   },
 });
