@@ -1,6 +1,7 @@
+import { Image } from "expo-image";
 import { Clock, Star } from "lucide-react-native";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 
 
@@ -10,6 +11,8 @@ function RestaurantItem({name,image,rating,time,tags}) {
       <Image
         source={{ uri: image }}
         style={styles.image}
+        contentFit="cover"
+        transition={200}
       />
       
       <View style={styles.content}>

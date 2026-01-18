@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { getRestaurantById, RestaurantResponse, MenuResponse } from "@/src/services/restaurant.service";
@@ -76,7 +76,7 @@ export default function RestaurantDetailScreen() {
       
       {/* Header Image & Navigation */}
       <View style={styles.header}>
-        <Image source={{ uri: restaurant.image }} style={styles.headerImage} />
+        <Image source={{ uri: restaurant.image }} style={styles.headerImage} contentFit="cover" transition={200} />
         <View style={styles.headerOverlay}>
             <SafeAreaView style={styles.headerSafeArea} edges={["top"]}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.iconButton}>
@@ -156,7 +156,7 @@ export default function RestaurantDetailScreen() {
                         }
                     })}
                 >
-                    <Image source={{ uri: item.image }} style={styles.menuItemImage} />
+                    <Image source={{ uri: item.image }} style={styles.menuItemImage} contentFit="cover" transition={200} />
                     <View style={styles.menuItemContent}>
                         <Text style={styles.menuItemName}>{item.name}</Text>
                         <Text style={styles.menuItemDescription} numberOfLines={2}>{restaurant.name} - {item.category}</Text> 

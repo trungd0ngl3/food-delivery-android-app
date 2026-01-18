@@ -7,7 +7,6 @@ import {
 } from "lucide-react-native";
 import React, { useState } from "react";
 import {
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -15,6 +14,7 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
+import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Mock data for sizes and ingredients since backend doesn't provide them yet
@@ -55,7 +55,7 @@ export default function FoodDetailScreen() {
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.imageContainer}>
-             <Image source={{ uri: image as string }} style={styles.foodImage} />
+             <Image source={{ uri: image as string }} style={styles.foodImage} contentFit="cover" transition={200} />
              <Pressable style={styles.favoriteButtonOnImage}>
                  <Heart color="#fff" fill="transparent" />
              </Pressable>
