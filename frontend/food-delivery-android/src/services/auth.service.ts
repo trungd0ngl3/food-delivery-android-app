@@ -21,11 +21,13 @@ export interface RegisterRequest {
   password: string;
 }
 
+// Request registration OTP
 export const requestRegisterOtp = async (data: RegisterRequest) => {
   const res = await axios.post(`${API_URL}/register/request-otp`, data);
   return res.data;
 };
 
+// Confirm registration with OTP
 export const confirmRegister = async (data: {
   name: string;
   email: string;
@@ -36,6 +38,7 @@ export const confirmRegister = async (data: {
   return res.data;
 };
 
+// Login
 export const loginApi = async (email: string, password: string) => {
   const res = await axios.post(`${API_URL}/login`, {
     email,
@@ -45,6 +48,7 @@ export const loginApi = async (email: string, password: string) => {
   return res.data.data as LoginResponse;
 };
 
+// Request forgot password OTP
 export const requestForgotPasswordOtp = async (email: string) => {
   const res = await axios.post(`${API_URL}/forgot-password/request-otp`, {
     email,
@@ -52,6 +56,7 @@ export const requestForgotPasswordOtp = async (email: string) => {
   return res.data;
 };
 
+// Confirm password reset with OTP
 export const confirmPasswordReset = async (data: {
   email: string;
   otp: string;
