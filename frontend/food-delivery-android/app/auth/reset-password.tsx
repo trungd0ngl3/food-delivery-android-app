@@ -1,19 +1,24 @@
-import { Colors } from '@/src/constants/Color';
-import { useRouter } from "expo-router";
-import React, { useState } from 'react';
+import { Colors } from "@/src/constants/Color";
+import { confirmPasswordReset } from "@/src/services/auth.service";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ResetPasswordScreen = () => {
-  const [newPassword, setNewPassword] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const { email, otp } = useLocalSearchParams<{
+    email: string;
+    otp: string;
+  }>();
 
   const router = useRouter();
 
@@ -21,22 +26,37 @@ const ResetPasswordScreen = () => {
     router.back();
   };
 
-  const onResetPassword = () => {
-    // TODO: gọi API reset password với newPassword
-    router.replace("/auth/login");
+  const onResetPassword = async () => {
+    if (!newPassword) {
+      alert("Please input new password");
+      return;
+    }
+
+    try {
+      await confirmPasswordReset({
+        email,
+        otp,
+        newPassword,
+      });
+
+      alert("Reset password success");
+      router.replace("/auth/login");
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Reset failed");
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
         {/* Phần trên */}
         <View style={styles.topSection}>
           <View style={styles.topContent}>
             <TouchableOpacity style={styles.backButton} onPress={onBack}>
-              <Text style={styles.backIcon}>{'<'}</Text>
+              <Text style={styles.backIcon}>{"<"}</Text>
             </TouchableOpacity>
 
             <View style={styles.topTextWrapper}>
@@ -74,11 +94,11 @@ const styles = StyleSheet.create({
   topSection: {
     flex: 0.3,
     backgroundColor: Colors.text,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   topContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   backButton: {
@@ -87,17 +107,17 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     borderColor: Colors.darkgray,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
-  backIcon: { color: Colors.background, fontSize: 18, fontWeight: 'bold' },
-  topTextWrapper: { flex: 1, alignItems: 'center' },
+  backIcon: { color: Colors.background, fontSize: 18, fontWeight: "bold" },
+  topTextWrapper: { flex: 1, alignItems: "center" },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.background,
-    textAlign: 'center',
+    textAlign: "center",
   },
   bottomSection: {
     flex: 0.7,
@@ -109,7 +129,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.darkgray,
     marginBottom: 8,
   },
@@ -125,13 +145,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 10,
     paddingVertical: 16,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 30,
   },
   resetButtonText: {
     color: Colors.background,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
