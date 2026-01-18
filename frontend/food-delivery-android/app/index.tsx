@@ -7,6 +7,7 @@ import Header from "@/src/components/home/Header";
 import RestaurantItem from "@/src/components/home/RestaurantItem";
 
 import { restaurants as initialRestaurants } from "@/src/data/restaurants";
+import { useRouter } from "expo-router";
 
 const user = {
     name: 'trungdongle',
@@ -22,6 +23,7 @@ const categories = [
 ];
 
 export default function Index() {
+  const router = useRouter();
   const [restaurants, setRestaurants] = useState(initialRestaurants);
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +31,6 @@ export default function Index() {
     if (loading) return;
     setLoading(true);
     
-    // Simulate network delay
     setTimeout(() => {
       const newRestaurants = initialRestaurants.map((item) => ({
         ...item,
@@ -55,6 +56,7 @@ export default function Index() {
                 rating={item.rating}
                 time={item.time}
                 tags={item.tags}
+                onPress={() => router.push(`/restaurant/${item.id}`)}
               />
            </View>
         )}

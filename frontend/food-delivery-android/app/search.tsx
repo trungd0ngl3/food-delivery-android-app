@@ -1,15 +1,8 @@
+import { Colors } from '@/src/constants/Color';
 import { useRouter } from 'expo-router';
 import { ChevronLeft, Search as SearchIcon, ShoppingBag, Star, X } from 'lucide-react-native';
 import React, { useState } from 'react';
-import {
-    Image,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-} from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SearchScreen() {
@@ -64,11 +57,11 @@ export default function SearchScreen() {
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} style={styles.iconButton}>
-          <ChevronLeft color="#181C2E" />
+          <ChevronLeft color={Colors.black}/>
         </Pressable>
         <Text style={styles.headerTitle}>Search</Text>
         <Pressable style={styles.cartButton}>
-             <ShoppingBag color="#fff" />
+             <ShoppingBag color={Colors.white} />
              <View style={styles.cartBadge}>
                 <Text style={styles.cartBadgeText}>2</Text>
              </View>
@@ -77,7 +70,7 @@ export default function SearchScreen() {
 
       <View style={styles.searchContainer}>
         <View style={styles.searchBar}>
-          <SearchIcon color="#A0A5BA" size={20} />
+          <SearchIcon color={Colors.darkgray} size={20} />
           <TextInput
             style={styles.input}
             placeholder="Search on foodly"
@@ -87,7 +80,7 @@ export default function SearchScreen() {
           />
           {searchText ? (
             <Pressable onPress={() => setSearchText('')}>
-              <X color="#A0A5BA" size={20} />
+              <X color={Colors.darkgray} size={20} />
             </Pressable>
           ) : null}
         </View>
@@ -115,7 +108,7 @@ export default function SearchScreen() {
               <View style={styles.restaurantInfo}>
                 <Text style={styles.restaurantName}>{restaurant.name}</Text>
                 <View style={styles.ratingContainer}>
-                  <Star size={14} fill="#FF7622" color="#FF7622" />
+                  <Star size={14} fill={Colors.primary} color={Colors.primary} />
                   <Text style={styles.ratingText}>{restaurant.rating}</Text>
                 </View>
               </View>
@@ -144,7 +137,7 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   header: {
     flexDirection: 'row',
@@ -156,7 +149,7 @@ const styles = StyleSheet.create({
   iconButton: {
     width: 45,
     height: 45,
-    backgroundColor: '#ECF0F4',
+    backgroundColor: Colors.gray,
     borderRadius: 22.5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -164,12 +157,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#181C2E',
+    color: Colors.text,
   },
   cartButton: {
       width: 45,
       height: 45,
-      backgroundColor: '#181C2E',
+      backgroundColor: Colors.black,
       borderRadius: 22.5,
       alignItems: 'center',
       justifyContent: 'center',
@@ -179,17 +172,17 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: -5,
       right: -5,
-      backgroundColor: '#FF7622',
+      backgroundColor: Colors.primary,
       width: 24,
       height: 24,
       borderRadius: 12,
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 2,
-      borderColor: '#fff'
+      borderColor: Colors.white
   },
   cartBadgeText: {
-      color: '#fff',
+      color: Colors.white,
       fontSize: 12,
       fontWeight: 'bold'
   },
@@ -201,7 +194,7 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F6F6F6',
+    backgroundColor: Colors.gray,
     height: 60,
     borderRadius: 15,
     paddingHorizontal: 16,
@@ -210,7 +203,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     fontSize: 16,
-    color: '#181C2E',
+    color: Colors.text,
   },
   scrollContent: {
     paddingBottom: 24,
@@ -221,13 +214,10 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    color: '#32343E',
+    color: Colors.text,
     marginBottom: 16,
-    // fontWeight: 'normal' // Font from image looks regular/medium
   },
   horizontalScroll: {
-    // paddingHorizontal: 24, // Handled by section padding for title alignment? No, scrollview needs to go edge to edge usually or fit.
-    // If we want items to scroll normally, we can remove paddingHorizontal from section for the scrollview part, but easiest is to just have padding in container
     marginHorizontal: -24,
     paddingHorizontal: 24
   },
@@ -236,11 +226,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: '#EDEDED',
+    borderColor: Colors.gray,
     marginRight: 12,
   },
   keywordText: {
-    color: '#181C2E',
+    color: Colors.text,
     fontSize: 16,
   },
   restaurantRow: {
@@ -260,7 +250,7 @@ const styles = StyleSheet.create({
   },
   restaurantName: {
     fontSize: 16,
-    color: '#32343E',
+    color: Colors.text,
     marginBottom: 4,
   },
   ratingContainer: {
@@ -271,7 +261,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#181C2E',
+    color: Colors.text,
   },
   foodCard: {
       width: 150,
@@ -286,11 +276,11 @@ const styles = StyleSheet.create({
   foodName: {
       fontSize: 16,
       fontWeight: 'bold',
-      color: '#181C2E',
+      color: Colors.text,
       marginBottom: 4
   },
   foodRestaurant: {
       fontSize: 13,
-      color: '#A0A5BA'
+      color: Colors.text,
   }
 });

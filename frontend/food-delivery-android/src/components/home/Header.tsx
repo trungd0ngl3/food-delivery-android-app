@@ -1,8 +1,8 @@
+import { Colors } from '@/src/constants/Color';
 import { Link } from 'expo-router';
 import { ChevronDown, Menu, Search, ShoppingBag } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-
 
 function Header() {
   const [username, setUsername] = useState('user');
@@ -43,7 +43,7 @@ function Header() {
       {/* Search Bar */}
       <Link href="/search" asChild>
         <Pressable style={styles.searchBar}>
-          <Search style={styles.searchIcon} color={'#A0A5BA'} />
+          <Search style={styles.searchIcon} color={Colors.darkgray} />
           <TextInput 
             style={styles.searchInput} 
             placeholder='Search..' 
@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
 
   deliverTo:{
     fontSize: 12,
-    color: '#FC6E2A',
+    color: Colors.primary,
   },
 
   address:{
     fontSize: 14,
-    color: '#676767',
+    color: Colors.darkgray,
   },
 
   greeting:{
@@ -99,34 +99,36 @@ const styles = StyleSheet.create({
   },
   
   menu:{
-    backgroundColor: '#ECF0F4'
+    backgroundColor: Colors.gray
   },
   cart:{
-    backgroundColor: '#181C2E',
+    backgroundColor: Colors.black,
   },
 
   cartBadge: {
     position: 'absolute',
-    top: -2,
-    right: -2,
-    backgroundColor: '#FF7622',
+    top: -5,
+    right: -5,
+    backgroundColor: Colors.primary,
+    width: 24,
+    height: 24,
     borderRadius: 12,
-    minWidth: 25,
-    height: 25,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#fff'
   },
 
   badgeText: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.white,
+    fontSize: 12,
     fontWeight: 'bold',
   },
 
   searchBar:{
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F6F6F6',
+    backgroundColor: Colors.gray,
     height: 64,
     borderRadius: 10
   },
