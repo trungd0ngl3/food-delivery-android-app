@@ -1,46 +1,58 @@
-import { Colors } from '@/src/constants/Color';
+import { Colors } from "@/src/constants/Color";
+import { requestForgotPasswordOtp } from "@/src/services/auth.service";
 import { useRouter } from "expo-router";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ForgotPasswordScreen = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
   const onBackToLogin = () => {
     router.replace("/auth/login");
   };
 
-  const onSendCode = () => {
-    // TODO: gửi request gửi code reset password
-    router.replace({
+  const onSendCode = async () => {
+    if (!email) {
+      alert("Please input email");
+      return;
+    }
+
+    try {
+      await requestForgotPasswordOtp(email);
+
+      router.replace({
         pathname: "/auth/verify-otp",
         params: {
           flow: "forgot-password",
+          email,
         },
-    });
+      });
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Send OTP failed");
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
         {/* Phần trên: giống Register nhưng đổi title/description */}
         <View style={styles.topSection}>
           <View style={styles.topContent}>
             <TouchableOpacity style={styles.backButton} onPress={onBackToLogin}>
-              <Text style={styles.backIcon}>{'<'}</Text>
+              <Text style={styles.backIcon}>{"<"}</Text>
             </TouchableOpacity>
 
             <View style={styles.topTextWrapper}>
@@ -80,11 +92,11 @@ const styles = StyleSheet.create({
   topSection: {
     flex: 0.3,
     backgroundColor: Colors.text,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   topContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   backButton: {
@@ -93,29 +105,29 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     borderColor: Colors.darkgray,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
   backIcon: {
     color: Colors.background,
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   topTextWrapper: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.background,
     marginBottom: 6,
   },
   description: {
     fontSize: 14,
     color: Colors.darkgray,
-    textAlign: 'center',
+    textAlign: "center",
   },
   bottomSection: {
     flex: 0.7,
@@ -127,7 +139,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.darkgray,
     marginBottom: 8,
   },
@@ -143,13 +155,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 10,
     paddingVertical: 16,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 30,
   },
   sendButtonText: {
     color: Colors.background,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

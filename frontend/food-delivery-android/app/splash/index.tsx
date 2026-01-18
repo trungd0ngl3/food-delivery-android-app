@@ -2,11 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-
-export const STORAGE_KEYS = {
-  HAS_SEEN_INTRO: "hasSeenIntro",
-  ACCESS_TOKEN: "accessToken",
-};
+import { STORAGE_KEYS } from "../../src/constants/storage";
 
 export default function SplashScreen() {
   const router = useRouter();
@@ -17,23 +13,39 @@ export default function SplashScreen() {
     const bootstrap = async () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
-
         if (!isActive) return;
 
-        const hasSeenIntro = await AsyncStorage.getItem(
-          STORAGE_KEYS.HAS_SEEN_INTRO
-        );
-        const token = await AsyncStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+        const [token, expiredAt, hasSeenIntro] = await Promise.all([
+          AsyncStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN),
+          AsyncStorage.getItem(STORAGE_KEYS.TOKEN_EXPIRED_AT),
+          AsyncStorage.getItem(STORAGE_KEYS.HAS_SEEN_INTRO),
+        ]);
 
+        // 1️⃣ Chưa xem intro → intro
         if (!hasSeenIntro) {
           router.replace("/intro");
-        } else if (!token) {
-          router.replace("/auth");
-        } else {
-          router.replace("/main");
+          return;
         }
+
+        if (!token) {
+          router.replace("/auth/login");
+          return;
+        }
+
+        if (expiredAt && Date.now() > Number(expiredAt)) {
+          await AsyncStorage.multiRemove([
+            STORAGE_KEYS.ACCESS_TOKEN,
+            STORAGE_KEYS.TOKEN_EXPIRED_AT,
+          ]);
+          router.replace("/auth/login");
+          return;
+        }
+
+        // 4️⃣ Token hợp lệ → main
+        router.replace("/main");
       } catch (error) {
-        if (isActive) router.replace("/intro");
+        console.log("Error during bootstrap:", error);
+        router.replace("/auth/login");
       }
     };
 
@@ -46,7 +58,10 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../src/assets/images/splash/icon.png")} style={styles.logo} />
+      <Image
+        source={require("../../src/assets/images/splash/icon.png")}
+        style={styles.logo}
+      />
       <Text style={styles.appName}>Food App</Text>
     </View>
   );
