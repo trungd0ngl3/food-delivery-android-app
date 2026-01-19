@@ -1,5 +1,11 @@
 import { Link, useRouter } from "expo-router";
-import { ChevronDown, Menu, Search, ShoppingBag, BarChart3 } from "lucide-react-native";
+import {
+  BarChart3,
+  ChevronDown,
+  Menu,
+  Search,
+  ShoppingBag,
+} from "lucide-react-native";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -27,7 +33,7 @@ function Header({ user }: HeaderProps) {
     <View style={{ paddingHorizontal: 24, paddingTop: 12 }}>
       <View style={styles.container}>
         {/* Menu */}
-        <View style={styles.container}>  
+        <View style={styles.container}>
           <Pressable style={[styles.button, styles.menu]}>
             <Menu />
           </Pressable>
@@ -41,13 +47,14 @@ function Header({ user }: HeaderProps) {
 
         {/* Dashboard and Cart */}
         <View style={styles.container}>
-          <Pressable 
-            style={[styles.button, styles.dashboard]}
-            onPress={() => router.push("/main/dashboard")}
-          >
-            <BarChart3 color={"#181C2E"} />
-          </Pressable>
-          
+          {user?.role === "restaurant_owner" && (
+            <Pressable
+              style={[styles.button, styles.dashboard]}
+              onPress={() => router.push("/main/dashboard")}
+            >
+              <BarChart3 color={"#181C2E"} />
+            </Pressable>
+          )}
           <Pressable style={[styles.button, styles.cart]}>
             <ShoppingBag color={"#fff"} />
 
