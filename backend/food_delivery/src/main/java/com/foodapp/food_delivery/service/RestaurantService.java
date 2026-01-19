@@ -8,6 +8,7 @@ import com.foodapp.food_delivery.model.Category;
 import com.foodapp.food_delivery.model.Restaurant;
 import com.foodapp.food_delivery.repository.CategoryRepository;
 import com.foodapp.food_delivery.repository.RestaurantRepository;
+import com.foodapp.food_delivery.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,7 +25,7 @@ public class RestaurantService {
     RestaurantRepository restaurantRepository;
     RestaurantMapper restaurantMapper;
     CategoryRepository categoryRepository;
-    com.foodapp.food_delivery.repository.UserRepository userRepository;
+    UserRepository userRepository;
 
 
     public List<RestaurantResponse> getAllRestaurants(Integer categoryId) {

@@ -1,5 +1,5 @@
-import { Link } from "expo-router";
-import { ChevronDown, Menu, Search, ShoppingBag } from "lucide-react-native";
+import { Link, useRouter } from "expo-router";
+import { ChevronDown, Menu, Search, ShoppingBag, UtensilsCrossed } from "lucide-react-native";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -11,6 +11,7 @@ interface HeaderProps {
 
 function Header({ user }: HeaderProps) {
   const [cartCount, setCartCount] = useState(2);
+  const router = useRouter();
 
   const getGreeting = () => {
     const hours = new Date().getHours();
@@ -27,9 +28,12 @@ function Header({ user }: HeaderProps) {
       <View style={styles.container}>
         {/* Menu */}
         <View style={styles.container}>
-          <Pressable style={[styles.button, styles.menu]}>
-            <Menu />
-          </Pressable>
+          <Link href={"/main/restaurant/index.tsx"}>
+            <Pressable style={[styles.button, styles.menu]}>
+              <Menu />
+            </Pressable>
+          </Link>
+          
           <View style={styles.info}>
             <Text style={[styles.deliverTo, styles.bold]}>DELIVER TO</Text>
             <Text style={styles.address}>
@@ -39,7 +43,16 @@ function Header({ user }: HeaderProps) {
         </View>
 
         {/* Cart */}
-        <View>
+        <View style={styles.iconsContainer}>
+          {/* Restaurant Menu Button */}
+          <Pressable 
+            style={[styles.button, styles.menu]}
+            onPress={() => router.push("/main/restaurant/dashboard")}
+          >
+            <UtensilsCrossed height={24} width={24} color="#FF6B35" />
+          </Pressable>
+
+          {/* Cart Button */}
           <Pressable style={[styles.button, styles.cart]}>
             <ShoppingBag color={"#fff"} />
 
@@ -119,6 +132,12 @@ const styles = StyleSheet.create({
   },
   cart: {
     backgroundColor: "#181C2E",
+  },
+
+  iconsContainer: {
+    flexDirection: "row",
+    gap: 12,
+    alignItems: "center",
   },
 
   cartBadge: {
