@@ -1,13 +1,20 @@
-import { Image } from "expo-image";
+import { Colors } from '@/src/constants/Color';
 import { Clock, Star } from "lucide-react-native";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
+interface RestaurantItemProps {
+  name: string;
+  image: string;
+  rating: number;
+  time: string;
+  tags: string[];
+  onPress: () => void;
+}
 
-
-function RestaurantItem({name,image,rating,time,tags}) {
+function RestaurantItem({name, image, rating, time, tags, onPress}: RestaurantItemProps) {
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <Image
         source={{ uri: image }}
         style={styles.image}
@@ -26,11 +33,11 @@ function RestaurantItem({name,image,rating,time,tags}) {
 
         <View style={styles.infoRow}>
           <View style={styles.infoItem}>
-            <Star size={16} color="#FF7622" fill="#FF7622" />
+            <Star size={16} color={Colors.primary} fill={Colors.primary} />
             <Text style={styles.rating}>{rating}</Text>
           </View>
           <View style={styles.infoItem}>
-             <Clock size={16} color="#FF7622" />
+             <Clock size={16} color={Colors.primary} />
              <Text style={styles.time}>{time}</Text>
           </View>
            <View style={styles.infoItem}>
@@ -38,14 +45,14 @@ function RestaurantItem({name,image,rating,time,tags}) {
            </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     marginBottom: 24,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     borderRadius: 15,
   },
   image: {
@@ -60,12 +67,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#181C2E",
+    color: Colors.text,
     marginBottom: 6,
   },
   tags: {
     fontSize: 14,
-    color: "#A0A5BA",
+    color: Colors.darkgray,
     marginBottom: 12,
   },
   infoRow: {
@@ -81,16 +88,16 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     fontSize: 14,
     fontWeight: "bold",
-    color: "#181C2E",
+    color: Colors.text,
   },
   time: {
     marginLeft: 6,
     fontSize: 14,
-     color: "#181C2E",
+     color: Colors.text,
   },
   delivery: {
      fontSize: 14,
-     color: "#A0A5BA",
+     color: Colors.text,
   }
 });
 
