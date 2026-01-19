@@ -33,6 +33,18 @@ public class Menu {
     String image;
     
     String category; // Grouping like "Burger", "Drink"
+    
+    @Column(name = "available_for_pickup")
+    Boolean availableForPickup;
+    
+    @Column(name = "available_for_delivery")
+    Boolean availableForDelivery;
+    
+    @Column(precision = 3, scale = 1)
+    BigDecimal rating;
+    
+    @Column(name = "review_count")
+    Integer reviewCount;
 
 
     @ManyToOne

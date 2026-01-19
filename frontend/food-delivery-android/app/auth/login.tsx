@@ -5,13 +5,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -34,13 +34,15 @@ const LoginScreen = () => {
         await AsyncStorage.multiSet([
           [STORAGE_KEYS.ACCESS_TOKEN, token],
           [STORAGE_KEYS.TOKEN_EXPIRED_AT, expiredAt.toString()],
+          ["user", JSON.stringify(res)],
         ]);
         router.replace("/main");
       } else {
         // chỉ lưu trong memory (session)
         await AsyncStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
+        await AsyncStorage.setItem("user", JSON.stringify(res));
         router.replace("/main");
-      } 
+      }
     } catch (error: any) {
       if (error.response?.status === 401) {
         alert("Invalid email or password");
