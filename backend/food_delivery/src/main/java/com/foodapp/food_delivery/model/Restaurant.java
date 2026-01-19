@@ -3,6 +3,8 @@ package com.foodapp.food_delivery.model;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
+
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -40,6 +42,14 @@ public class Restaurant {
     
     @Builder.Default
     BigDecimal rating = BigDecimal.ZERO;
+
+    String image;
+    String description;
+    @Column(name = "delivery_fee")
+    BigDecimal deliveryFee;
+    @Column(name = "delivery_time")
+    String deliveryTime;
+
     
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     List<Menu> menuItems;
@@ -49,5 +59,14 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     List<Review> reviews;
+
+    @ManyToMany
+    @JoinTable(
+        name = "restaurant_categories",
+        joinColumns = @JoinColumn(name = "restaurant_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    Set<Category> categories;
+
 
 }
