@@ -75,7 +75,7 @@ export default function SearchScreen() {
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} style={styles.iconButton}>
-          <ChevronLeft color="#181C2E" />
+          <ChevronLeft color={Colors.black}/>
         </Pressable>
         <Text style={styles.headerTitle}>Search</Text>
         <View style={{ width: 45 }} /> 
@@ -83,7 +83,7 @@ export default function SearchScreen() {
 
       <View style={styles.searchContainer}>
         <View style={styles.searchBar}>
-          <SearchIcon color="#A0A5BA" size={20} />
+          <SearchIcon color={Colors.darkgray} size={20} />
           <TextInput
             style={styles.input}
             placeholder="Search on foodly"
