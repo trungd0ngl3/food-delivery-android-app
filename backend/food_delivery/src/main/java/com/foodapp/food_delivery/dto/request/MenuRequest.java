@@ -1,8 +1,7 @@
-package com.foodapp.food_delivery.dto.response;
+package com.foodapp.food_delivery.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 import java.math.BigDecimal;
 
 @Data
@@ -10,8 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MenuResponse {
-    Integer id;
+public class MenuRequest {
     String name;
     BigDecimal price;
     String description;
@@ -20,6 +18,4 @@ public class MenuResponse {
     Integer restaurantId;
     Boolean availableForPickup;
     Boolean availableForDelivery;
-    BigDecimal rating;
-    Integer reviewCount;
 }

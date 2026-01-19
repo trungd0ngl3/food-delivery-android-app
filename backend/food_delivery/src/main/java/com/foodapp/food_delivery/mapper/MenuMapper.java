@@ -7,5 +7,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface MenuMapper {
     @Mapping(source = "menuId", target = "id")
+    @Mapping(source = "restaurant.restaurantId", target = "restaurantId")
     MenuResponse toMenuResponse(Menu menu);
 }
