@@ -4,7 +4,13 @@ import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import CategoryItem from './CategoryItem'
 
-function Category({categories}) {
+interface CategoryProps {
+  categories: any[];
+  selectedCategory: number | null;
+  onSelectCategory: (id: number) => void;
+}
+
+function Category({ categories, selectedCategory, onSelectCategory }: CategoryProps) {
   return (
     <View>
       <View style={styles.categoryHeader}>
@@ -15,13 +21,15 @@ function Category({categories}) {
       </View>
       <FlatList
             data={categories}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoryList}
             renderItem={({ item }) => (
               <CategoryItem
                 props={item}
+                isSelected={selectedCategory === item.id}
+                onPress={() => onSelectCategory(item.id)}
               />
             )}
           />

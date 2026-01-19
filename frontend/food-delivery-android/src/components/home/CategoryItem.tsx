@@ -1,15 +1,24 @@
+import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
 import { Colors } from '@/src/constants/Color';
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
 
-function CategoryItem({ props }) {
+interface CategoryItemProps {
+  props: {
+    id: number;
+    name: string;
+    image: string;
+  };
+  isSelected?: boolean;
+  onPress?: () => void;
+}
+
+function CategoryItem({ props, isSelected, onPress }: CategoryItemProps) {
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.card}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={styles.wrapper}>
+      <View style={[styles.card, isSelected && styles.selectedCard]}>
         <Image source={{ uri: props.image }} style={styles.image} />
       </View>
-      <Text style={styles.text}>{props.name}</Text>
-    </View>
+      <Text style={[styles.text, isSelected && styles.selectedText]}>{props.name}</Text>
+    </TouchableOpacity>
   );
 }
 
@@ -40,6 +49,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: Colors.text,
+  },
+  selectedCard: {
+    backgroundColor: Colors.primary,
+  },
+  selectedText: {
+    color: Colors.primary,
+    fontWeight: 'bold',
   },
 });
 

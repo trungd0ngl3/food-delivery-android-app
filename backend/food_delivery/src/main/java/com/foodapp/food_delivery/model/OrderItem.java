@@ -1,12 +1,6 @@
 package com.foodapp.food_delivery.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "order_items")
+@Table(name = "OrderItems")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +20,8 @@ import lombok.experimental.FieldDefaults;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long orderItemId;
+    @Column(name = "order_item_id")
+    Integer orderItemId;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -35,5 +32,6 @@ public class OrderItem {
     Menu menu;
 
     Integer quantity;
-    Double price;
+    @Column(precision = 10, scale = 2)
+    BigDecimal price;
 }

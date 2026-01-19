@@ -1,16 +1,9 @@
 package com.foodapp.food_delivery.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "menus")
+@Table(name = "Menu")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,12 +21,19 @@ import lombok.experimental.FieldDefaults;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long menuId;
+    @Column(name = "menu_id")
+    Integer menuId;
 
+    @Column(name = "item_name")
     String name;
-    Double price;
+    @Column(precision = 10, scale = 2)
+    BigDecimal price;
     String description;
+    @Column(name = "image_url")
     String image;
+    
+    String category; // Grouping like "Burger", "Drink"
+
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
